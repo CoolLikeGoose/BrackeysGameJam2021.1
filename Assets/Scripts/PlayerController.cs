@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
     //private Transform playerChecker;
 
     //private bool mergeComplete = false;
-    //private List<int> avaibleColors;
+    private List<int> avaibleColors;
+    private bool isNowMerging = false;
 
     [SerializeField] private LayerMask anotherPlayer;
 
@@ -24,10 +25,16 @@ public class PlayerController : MonoBehaviour
         groundChecker = transform.GetChild(0);
         //playerChecker = transform.GetChild(1);
 
-        //GameManager.OnMergeComplete += () =>
-        //{
-        //    mergeComplete = true;
-        //};
+        GameManager.OnMergeComplete += () =>
+        {
+            if (personalId == InputManager.Instance.curPlayer)
+                avaibleColors.AddRange(InputManager.avaibleColors);
+        };
+
+        GameManager.OnIdLoaded += () =>
+        {
+            avaibleColors = new List<int>() { personalId };
+        };
     }
 
     public void Move(float factor)
@@ -38,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(float factor)
     {
-        if (Physics2D.BoxCast(groundChecker.position, new Vector2(castRadius, castRadius), 0, Vector3.forward))
+        if (Physics2D.BoxCast(groundChecker.position, new Vector2(castRadius * 35, castRadius), 0, Vector3.forward))
             rb.AddForce(Vector2.up * factor, ForceMode2D.Impulse);
     }
 
@@ -51,15 +58,26 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            //if (InputManager.Instance.curPlayer != personalId)
-            //{
-            //    InputManager.Instance.GetDestination(this);
-            //}
+            if (InputManager.Instance.curPlayer != personalId && !isNowMerging)
+            {
+                //InputManager.Instance.GetDestination(this);
+                isNowMerging = true;
+
+                MergeIntoAnother();
+            }
             //else
             //{
-            //    StartCoroutine(ProvideMerge());
+            //    //StartCoroutine(ProvideMerge());
             //}
         }   
+    }
+
+    public void MergeIntoAnother()
+    {
+        InputManager.avaibleColors = avaibleColors;
+        gameObject.SetActive(false);
+
+        InputManager.Instance.DeleteCube(personalId);
     }
 
     //public IEnumerator ProvideMerge()

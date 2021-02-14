@@ -17,6 +17,8 @@ public class InputManager : MonoBehaviour
     [HideInInspector] public int curPlayer = 0;
     [HideInInspector] public int lastMerge = -1;
 
+    public static List<int> avaibleColors;
+
     private void Awake()
     {
         Instance = this;
@@ -27,6 +29,8 @@ public class InputManager : MonoBehaviour
         player[0].personalId = 0;
         player[1].personalId = 1;
         player[2].personalId = 2;
+
+        GameManager.OnIdLoaded?.Invoke();
     }
 
     private void Update()
@@ -34,7 +38,7 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             curPlayer++;
-            if (curPlayer == 3)
+            if (curPlayer == player.Count)
                 curPlayer = 0;
         }
 
@@ -56,6 +60,25 @@ public class InputManager : MonoBehaviour
         //    print("yep");
         //}
     }
+
+    public void DeleteCube(int persId)
+    {
+        if (persId < curPlayer)
+            curPlayer--;
+        player.RemoveAt(persId);
+
+        GameManager.OnMergeComplete?.Invoke();
+    }
+
+    //public static void GetColorsList(List<int> _avaibleColors)
+    //{
+    //    avaibleColors = _avaibleColors;
+    //}
+
+    //public static List<int> ReturnColorList()
+    //{
+    //    return avaibleColors;
+    //}
 
     //public void GetDestination(PlayerController pc)
     //{

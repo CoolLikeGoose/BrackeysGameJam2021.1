@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //public static Action OnMergeComplete;
+    public static Action OnMergeComplete;
+    public static Action OnIdLoaded;
 
-    //private void OnDestroy()
-    //{
-    //    OnMergeComplete = null;
-    //}
+    private void OnDestroy()
+    {
+        OnIdLoaded = null;
+        OnMergeComplete = null;
+    }
 }
