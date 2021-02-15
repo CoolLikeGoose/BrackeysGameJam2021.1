@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private BoxCollider2D mainCollider;
+    private SpriteRenderer sr;
+
+    private void Start()
     {
-        
+        mainCollider = GetComponent<BoxCollider2D>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Open()
     {
-        
+        mainCollider.enabled = false;
+        sr.enabled = false;
+    }
+
+    public void Close()
+    {
+        mainCollider.enabled = true;
+        sr.enabled = true;
     }
 }

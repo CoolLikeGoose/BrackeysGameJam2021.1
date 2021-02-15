@@ -4,15 +4,37 @@ using UnityEngine;
 
 public class BtnController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private List<DoorController> doors;
+
+    [SerializeField] private ColorToMask colorReact;
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        print((int)colorReact);
+        if (collision.gameObject.layer != (int)colorReact)
+            return;
+
+        foreach (DoorController door in doors)
+        {
+            door.Open();
+        }    
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        
+        if (collision.gameObject.layer != (int)colorReact)
+            return;
+
+        foreach (DoorController door in doors)
+        {
+            door.Close();
+        }
     }
+}
+
+enum ColorToMask
+{
+    Red = 6,
+    Green = 7,
+    Blue = 8
 }
