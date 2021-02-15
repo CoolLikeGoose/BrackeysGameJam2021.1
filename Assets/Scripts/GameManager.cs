@@ -6,11 +6,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static Action OnMergeComplete;
+    public static Action OnChangeColor;
     //public static Action OnIdLoaded;
 
     private void OnDestroy()
     {
-        //OnIdLoaded = null;
+        OnChangeColor = null;
         OnMergeComplete = null;
     }
 }

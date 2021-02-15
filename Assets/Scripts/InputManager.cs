@@ -20,6 +20,18 @@ public class InputManager : MonoBehaviour
 
     public static List<int> avaibleColors;
 
+    [Header("Materials")]
+    public List<Material> materials;
+
+    [Header("Skin Main")]
+    public List<Sprite> mainSprite;
+
+    [Header("Skin Core")]
+    public List<Sprite> coreSprite;
+
+    [Header("Skin CoreHalf")]
+    public List<Sprite> halfSprite;
+
     private void Awake()
     {
         Instance = this;
@@ -29,22 +41,17 @@ public class InputManager : MonoBehaviour
         player[2].personalId = 2;
     }
 
-    private void Start()
-    {
-        //player[0].personalId = 0;
-        //player[1].personalId = 1;
-        //player[2].personalId = 2;
-
-        //GameManager.OnIdLoaded?.Invoke();
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            player[curPlayer].sr.material = materials[3];
+
             curPlayer++;
             if (curPlayer == player.Count)
                 curPlayer = 0;
+
+            player[curPlayer].sr.material = materials[player[curPlayer].personalId];
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -60,6 +67,7 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             player[curPlayer].NextColor();
+            GameManager.OnChangeColor?.Invoke();
         }
 
         moveX = Input.GetAxis("Horizontal");

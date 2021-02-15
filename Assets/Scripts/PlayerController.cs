@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,7 +12,9 @@ public class PlayerController : MonoBehaviour
     private float castRadius = 0.01f;
 
     private Rigidbody2D rb;
-    private SpriteRenderer sr;
+    private Light2D light2d;
+    [SerializeField] private GameObject childWithLight;
+    [HideInInspector] public SpriteRenderer sr;
 
     private Transform groundChecker;
     //private Transform playerChecker;
@@ -23,27 +26,23 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private LayerMask anotherPlayer;
 
+    //Skin
+    [SerializeField] private SpriteRenderer coreRend;
+    [SerializeField] private SpriteRenderer halfRend;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        light2d = childWithLight.GetComponent<Light2D>();
 
         groundChecker = transform.GetChild(0);
         //playerChecker = transform.GetChild(1);
 
         GameManager.OnMergeComplete += () =>
         {
-            if (numberInArray == InputManager.Instance.curPlayer)
-                avaibleColors.AddRange(InputManager.avaibleColors);
-
             EndMergeAsMain();
         };
-
-        //GameManager.OnIdLoaded += () =>
-        //{
-        //    avaibleColors = new List<int>() { personalId };
-        //    numberInArray = personalId;
-        //};
 
         avaibleColors = new List<int>() { personalId };
         numberInArray = personalId;
@@ -61,29 +60,53 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector2.up * factor, ForceMode2D.Impulse);
     }
 
+    private int ArrayClamp(int number)
+    {
+        if (avaibleColors.Count > number)
+        {
+            return avaibleColors[number];
+        }
+        else
+        {
+            return avaibleColors[number - avaibleColors.Count];
+        }
+    }
+
     public void NextColor()
     {
         curColorIndex++;
         if (curColorIndex == avaibleColors.Count)
             curColorIndex = 0;
 
-        switch (avaibleColors[curColorIndex])
+        int nowColor = avaibleColors[curColorIndex];
+        gameObject.layer = nowColor + 6;
+        personalId = nowColor;
+
+        sr.material = InputManager.Instance.materials[nowColor];
+
+        sr.sprite = InputManager.Instance.mainSprite[ArrayClamp(curColorIndex)];
+
+        if (avaibleColors.Count >= 2)
         {
-            // TODO: Replace color to sprite
+            coreRend.sprite = InputManager.Instance.coreSprite[ArrayClamp(curColorIndex + 1)];
+        }
+
+        if (avaibleColors.Count == 3)
+        {
+            halfRend.sprite = InputManager.Instance.halfSprite[ArrayClamp(curColorIndex + 2)];
+        }
+
+        //lights
+        switch (nowColor)
+        {
             case 0:
-                //E74963
-                sr.color = new Color(0.9058824f, 0.2862746f, 0.387396f);
-                gameObject.layer = 6;
+                light2d.color = new Color(1f, 0.1254902f, 0.1726206f);
                 break;
             case 1:
-                //4AE749
-                sr.color = new Color(0.2884732f, 0.9056604f, 0.2862228f);
-                gameObject.layer = 7;
+                light2d.color = new Color(0.1273585f, 1f, 0.5259069f);
                 break;
             case 2:
-                //49C6E7
-                sr.color = new Color(0.2862746f, 0.7764998f, 0.9058824f);
-                gameObject.layer = 8;
+                light2d.color = new Color(0.1254902f, 0.6270434f, 1f);
                 break;
         }
     }
@@ -124,8 +147,22 @@ public class PlayerController : MonoBehaviour
 
     public void EndMergeAsMain()
     {
+        if (numberInArray == InputManager.Instance.curPlayer)
+            avaibleColors.AddRange(InputManager.avaibleColors);
+
         rb.isKinematic = false;
         canMove = true;
+
+        //Change skin
+        if (avaibleColors.Count >= 2)
+        {
+            coreRend.sprite = InputManager.Instance.coreSprite[avaibleColors[1]];
+        }
+
+        if (avaibleColors.Count == 3)
+        {
+            halfRend.sprite = InputManager.Instance.halfSprite[avaibleColors[2]];
+        }
     }
 
     //public IEnumerator ProvideMerge()

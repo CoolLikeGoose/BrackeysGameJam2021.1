@@ -8,16 +8,25 @@ public class BtnController : MonoBehaviour
 
     [SerializeField] private ColorToMask colorReact;
 
+    private bool isOpen = false;
+
+    private void Start()
+    {
+        GameManager.OnChangeColor += () =>
+        {
+            if (isOpen)
+                CloseAll();
+        };
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print((int)colorReact);
         if (collision.gameObject.layer != (int)colorReact)
             return;
 
-        foreach (DoorController door in doors)
-        {
-            door.Open();
-        }    
+        isOpen = true;
+
+        OpenAll();   
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -25,6 +34,21 @@ public class BtnController : MonoBehaviour
         if (collision.gameObject.layer != (int)colorReact)
             return;
 
+        isOpen = false;
+
+        CloseAll();
+    }
+
+    private void OpenAll()
+    {
+        foreach (DoorController door in doors)
+        {
+            door.Open();
+        }
+    }
+
+    private void CloseAll()
+    {
         foreach (DoorController door in doors)
         {
             door.Close();
