@@ -9,7 +9,9 @@ public class PlayerController : MonoBehaviour
 
     private bool canMove = true;
     private float castRadius = 0.01f;
+
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
 
     private Transform groundChecker;
     //private Transform playerChecker;
@@ -17,12 +19,15 @@ public class PlayerController : MonoBehaviour
     //private bool mergeComplete = false;
     private List<int> avaibleColors;
     private bool isNowMerging = false;
+    private int curColorIndex = 0;
 
     [SerializeField] private LayerMask anotherPlayer;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+
         groundChecker = transform.GetChild(0);
         //playerChecker = transform.GetChild(1);
 
@@ -58,7 +63,29 @@ public class PlayerController : MonoBehaviour
 
     public void NextColor()
     {
+        curColorIndex++;
+        if (curColorIndex == avaibleColors.Count)
+            curColorIndex = 0;
 
+        switch (avaibleColors[curColorIndex])
+        {
+            // TODO: Replace color to sprite
+            case 0:
+                //E74963
+                sr.color = new Color(0.9058824f, 0.2862746f, 0.387396f);
+                gameObject.layer = 6;
+                break;
+            case 1:
+                //4AE749
+                sr.color = new Color(0.2884732f, 0.9056604f, 0.2862228f);
+                gameObject.layer = 7;
+                break;
+            case 2:
+                //49C6E7
+                sr.color = new Color(0.2862746f, 0.7764998f, 0.9058824f);
+                gameObject.layer = 8;
+                break;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

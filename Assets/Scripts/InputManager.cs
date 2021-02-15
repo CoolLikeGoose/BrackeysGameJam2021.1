@@ -57,6 +57,11 @@ public class InputManager : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            player[curPlayer].NextColor();
+        }
+
         moveX = Input.GetAxis("Horizontal");
     }
 
