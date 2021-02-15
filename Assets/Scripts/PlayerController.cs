@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [HideInInspector] public int personalId;
+    [HideInInspector] public int numberInArray;
 
     private bool canMove = true;
     private float castRadius = 0.01f;
@@ -27,14 +28,20 @@ public class PlayerController : MonoBehaviour
 
         GameManager.OnMergeComplete += () =>
         {
-            if (personalId == InputManager.Instance.curPlayer)
+            if (numberInArray == InputManager.Instance.curPlayer)
                 avaibleColors.AddRange(InputManager.avaibleColors);
+
+            EndMergeAsMain();
         };
 
-        GameManager.OnIdLoaded += () =>
-        {
-            avaibleColors = new List<int>() { personalId };
-        };
+        //GameManager.OnIdLoaded += () =>
+        //{
+        //    avaibleColors = new List<int>() { personalId };
+        //    numberInArray = personalId;
+        //};
+
+        avaibleColors = new List<int>() { personalId };
+        numberInArray = personalId;
     }
 
     public void Move(float factor)
@@ -58,26 +65,40 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (InputManager.Instance.curPlayer != personalId && !isNowMerging)
+            if (InputManager.Instance.curPlayer != numberInArray && !isNowMerging)
             {
                 //InputManager.Instance.GetDestination(this);
                 isNowMerging = true;
 
                 MergeIntoAnother();
             }
-            //else
-            //{
-            //    //StartCoroutine(ProvideMerge());
-            //}
-        }   
+            else
+            {
+                StartMergeAsMain();
+            }
+        }
     }
 
     public void MergeIntoAnother()
     {
         InputManager.avaibleColors = avaibleColors;
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 
-        InputManager.Instance.DeleteCube(personalId);
+        InputManager.Instance.DeleteCube(numberInArray);
+    }
+
+    public void StartMergeAsMain()
+    {
+        rb.isKinematic = true;
+        Vector2 lastVelocity = rb.velocity;
+        rb.velocity = Vector2.zero;
+        canMove = false;
+    }
+
+    public void EndMergeAsMain()
+    {
+        rb.isKinematic = false;
+        canMove = true;
     }
 
     //public IEnumerator ProvideMerge()
@@ -98,20 +119,21 @@ public class PlayerController : MonoBehaviour
     //    avaibleColors.Add(InputManager.Instance.lastMerge);
     //}
 
-    //public IEnumerator MoveToCur(Vector2 target)
-    //{
-    //    rb.isKinematic = true;
-    //    rb.velocity = Vector2.zero;
-    //    canMove = false;
+    public IEnumerator MoveToCur(Vector2 target)
+    {
+        rb.isKinematic = true;
+        rb.velocity = Vector2.zero;
+        canMove = false;
 
-    //    while (Vector2.Distance(target, transform.position) > 0.05f)
-    //    {
-    //        transform.position = Vector2.Lerp(transform.position, target, 0.1f);
-    //        yield return null;
-    //    }
+        while (Vector2.Distance(target, transform.position) > 0.05f)
+        {
+            transform.position = Vector2.Lerp(transform.position, target, 0.1f);
+            yield return null;
+        }
 
-    //    GameManager.OnMergeComplete?.Invoke();
+        GameManager.OnMergeComplete?.Invoke();
 
-    //    Destroy(gameObject);
-    //}
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
+    }
 }

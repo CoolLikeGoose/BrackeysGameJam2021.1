@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
@@ -22,15 +23,19 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        player[0].personalId = 0;
+        player[1].personalId = 1;
+        player[2].personalId = 2;
     }
 
     private void Start()
     {
-        player[0].personalId = 0;
-        player[1].personalId = 1;
-        player[2].personalId = 2;
+        //player[0].personalId = 0;
+        //player[1].personalId = 1;
+        //player[2].personalId = 2;
 
-        GameManager.OnIdLoaded?.Invoke();
+        //GameManager.OnIdLoaded?.Invoke();
     }
 
     private void Update()
@@ -45,6 +50,11 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             player[curPlayer].Jump(jumpForce);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         moveX = Input.GetAxis("Horizontal");
@@ -63,11 +73,17 @@ public class InputManager : MonoBehaviour
 
     public void DeleteCube(int persId)
     {
+        player[persId].numberInArray = -1;
+        StartCoroutine(player[persId].MoveToCur(player[curPlayer].transform.position));
+
         if (persId < curPlayer)
             curPlayer--;
         player.RemoveAt(persId);
 
-        GameManager.OnMergeComplete?.Invoke();
+        for (int i = 0; i < player.Count; i++)
+        {
+            player[i].numberInArray = i;
+        }
     }
 
     //public static void GetColorsList(List<int> _avaibleColors)
