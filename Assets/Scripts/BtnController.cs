@@ -73,6 +73,7 @@ public class BtnController : MonoBehaviour
 
 enum ColorToMask
 {
+    Default = 0,
     Red = 6,
     Green = 7,
     Blue = 8

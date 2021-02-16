@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private bool canMove = true;
     private float castRadius = 0.01f;
 
-    private Rigidbody2D rb;
+    [HideInInspector] public Rigidbody2D rb;
     private Light2D light2d;
     [SerializeField] private GameObject childWithLight;
     [HideInInspector] public SpriteRenderer sr;
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private bool isNowMerging = false;
     private int curColorIndex = 0;
 
-    [SerializeField] private LayerMask anotherPlayer;
+    //[SerializeField] private LayerMask anotherPlayer;
 
     //Skin
     [SerializeField] private SpriteRenderer coreRend;
@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
         {
             avaibleColors.AddRange(InputManager.avaibleColors);
 
-            ParticleSystem ps = Instantiate(InputManager.Instance.particles, transform.position, Quaternion.identity);
+            ParticleSystem.MainModule ps = Instantiate(InputManager.Instance.particles, transform.position, Quaternion.identity).main;
             Color newColor = Color.black;
             switch (InputManager.particleColors)
             {

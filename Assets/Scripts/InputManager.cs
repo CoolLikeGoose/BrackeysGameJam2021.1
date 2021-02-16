@@ -53,6 +53,7 @@ public class InputManager : MonoBehaviour
                 curPlayer = 0;
 
             player[curPlayer].sr.material = materials[player[curPlayer].personalId];
+            player[curPlayer].rb.AddForce(Vector2.up * 3, ForceMode2D.Impulse);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
