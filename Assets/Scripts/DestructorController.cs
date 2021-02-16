@@ -16,7 +16,6 @@ public class DestructorController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        print("Suka");
         if (canPass != 0)
         {
             canPass--;

@@ -18,6 +18,8 @@ public class InputManager : MonoBehaviour
     [HideInInspector] public int lastMerge = -1;
 
     public static List<int> avaibleColors;
+    public static int particleColors;
+    public ParticleSystem particles;
 
     [Header("Materials")]
     public List<Material> materials;

@@ -11,6 +11,12 @@ public class GameManager : MonoBehaviour
     public static Action OnLevelComplete;
     //public static Action OnIdLoaded;
 
+    private void Start()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     private void OnDestroy()
     {
         OnChangeColor = null;

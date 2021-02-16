@@ -135,7 +135,11 @@ public class PlayerController : MonoBehaviour
 
     public void MergeIntoAnother()
     {
+        rb.isKinematic = true;
+        rb.velocity = Vector2.zero;
+
         InputManager.avaibleColors = avaibleColors;
+        InputManager.particleColors = avaibleColors[curColorIndex];
         //gameObject.SetActive(false);
 
         InputManager.Instance.DeleteCube(numberInArray);
@@ -152,7 +156,25 @@ public class PlayerController : MonoBehaviour
     public void EndMergeAsMain()
     {
         if (numberInArray == InputManager.Instance.curPlayer)
+        {
             avaibleColors.AddRange(InputManager.avaibleColors);
+
+            ParticleSystem ps = Instantiate(InputManager.Instance.particles, transform.position, Quaternion.identity);
+            Color newColor = Color.black;
+            switch (InputManager.particleColors)
+            {
+                case 0:
+                    newColor = new Color(1f, 0.1254902f, 0.1726206f);
+                    break;
+                case 1:
+                    newColor = new Color(0.1273585f, 1f, 0.5259069f);
+                    break;
+                case 2:
+                    newColor = new Color(0.1254902f, 0.6270434f, 1f);
+                    break;
+            }
+            ps.startColor = newColor;
+        }
 
         rb.isKinematic = false;
         canMove = true;

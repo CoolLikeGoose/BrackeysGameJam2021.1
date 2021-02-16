@@ -9,6 +9,7 @@ public class BtnController : MonoBehaviour
     [SerializeField] private ColorToMask colorReact;
 
     private bool isOpen = false;
+    private bool stillInCollider = false;
 
     private void Start()
     {
@@ -35,8 +36,17 @@ public class BtnController : MonoBehaviour
             return;
 
         isOpen = false;
+        stillInCollider = false;
 
-        CloseAll();
+        StartCoroutine(CloseAll());
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (stillInCollider || collision.gameObject.layer != (int)colorReact)
+            return;
+
+        stillInCollider = true;
     }
 
     private void OpenAll()
@@ -47,8 +57,13 @@ public class BtnController : MonoBehaviour
         }
     }
 
-    private void CloseAll()
+    private IEnumerator CloseAll()
     {
+        yield return null;
+
+        if (stillInCollider)
+            yield break;
+
         foreach (DoorController door in doors)
         {
             door.Close();
