@@ -9,7 +9,13 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private float leftX;
     [SerializeField] private float rightX;
     [SerializeField] private float Ypos;
-    
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     //Btns methods
     public void OnPlayBtn()
     {

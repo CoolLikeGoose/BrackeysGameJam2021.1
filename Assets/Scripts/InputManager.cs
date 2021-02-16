@@ -21,6 +21,8 @@ public class InputManager : MonoBehaviour
     public static int particleColors;
     public ParticleSystem particles;
 
+    public GameObject PausePopup;
+
     [Header("Materials")]
     public List<Material> materials;
 
@@ -74,7 +76,11 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            Time.timeScale = 0;
+            PausePopup.SetActive(true);
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         moveX = Input.GetAxis("Horizontal");
