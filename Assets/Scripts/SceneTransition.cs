@@ -9,12 +9,20 @@ public class SceneTransition : MonoBehaviour
     private static SceneTransition instance;
 
     private static string curTransScene;
+    //private static int curTransIndex;
 
     public static void SwitchToScene(string name)
     {
         curTransScene = name;
         instance.anim.SetTrigger("transStart");
     }
+
+    //public static void SwitchToSceneById(int ind)
+    //{
+    //    curTransScene = null;
+    //    curTransIndex = ind;
+    //    instance.anim.SetTrigger("transStart");
+    //}
 
     public static void ReloadScene()
     {
@@ -32,5 +40,13 @@ public class SceneTransition : MonoBehaviour
     public void OnAnimationEnd()
     {
         SceneManager.LoadScene(curTransScene);
+        //if (curTransScene == null)
+        //{
+        //    SceneManager.LoadScene(curTransScene);
+        //}
+        //else
+        //{
+        //    SceneManager.LoadScene(curTransIndex);
+        //}
     }
 }
