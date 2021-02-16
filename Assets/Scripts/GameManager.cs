@@ -7,11 +7,15 @@ public class GameManager : MonoBehaviour
 {
     public static Action OnMergeComplete;
     public static Action OnChangeColor;
+    public static Action OnAllColorsCollected;
+    public static Action OnLevelComplete;
     //public static Action OnIdLoaded;
 
     private void OnDestroy()
     {
         OnChangeColor = null;
         OnMergeComplete = null;
+        OnAllColorsCollected = null;
+        OnLevelComplete = null;
     }
 }

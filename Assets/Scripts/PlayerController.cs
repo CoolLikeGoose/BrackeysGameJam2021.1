@@ -56,8 +56,12 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(float factor)
     {
-        if (Physics2D.BoxCast(groundChecker.position, new Vector2(castRadius * 35, castRadius), 0, Vector3.forward))
+        LayerMask maskForthiObj = 1 << gameObject.layer | 1 << gameObject.layer + 4 | 1 << gameObject.layer + 5 | 1;
+        if (Physics2D.BoxCast(groundChecker.position, new Vector2(castRadius * 35, castRadius), 0, Vector3.forward, 50f, maskForthiObj))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, 0);
             rb.AddForce(Vector2.up * factor, ForceMode2D.Impulse);
+        }
     }
 
     private int ArrayClamp(int number)
@@ -162,6 +166,7 @@ public class PlayerController : MonoBehaviour
         if (avaibleColors.Count == 3)
         {
             halfRend.sprite = InputManager.Instance.halfSprite[avaibleColors[2]];
+            GameManager.OnAllColorsCollected?.Invoke();
         }
     }
 
