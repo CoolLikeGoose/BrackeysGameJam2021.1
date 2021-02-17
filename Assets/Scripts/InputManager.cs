@@ -74,6 +74,11 @@ public class InputManager : MonoBehaviour
             GameManager.OnChangeColor?.Invoke();
         }
 
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            player[curPlayer].StartIdolActivity();
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Time.timeScale = 0;

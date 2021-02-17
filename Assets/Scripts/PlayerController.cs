@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private SpriteRenderer coreRend;
     [SerializeField] private SpriteRenderer halfRend;
 
+    //Idol
+    private IdolController curIdol;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -234,5 +237,40 @@ public class PlayerController : MonoBehaviour
     public CircleCollider2D[] GetColliders()
     {
         return new CircleCollider2D[] { rightCollider, leftCollider };
+    }
+
+    // IDOL CONTROLLER
+
+    public void StartIdolActivity()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.7f, 1 << gameObject.layer);
+
+        foreach (Collider2D coll in colliders)
+        {
+            if (coll.CompareTag("Idol"))
+            {
+                curIdol = coll.gameObject.GetComponent<IdolController>();
+                StartCoroutine(StartCountdown());
+            }
+        }
+    }
+
+    private IEnumerator StartCountdown()
+    {
+        float timeLeft = 2f;
+
+        while (timeLeft > 0)
+        {
+            if (!Input.GetKey(KeyCode.F) || Input.GetAxis("Horizontal") != 0) 
+                yield break;
+
+            timeLeft -= 0.01f;
+
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        curIdol.Activate();
+
+        yield return null;
     }
 }
