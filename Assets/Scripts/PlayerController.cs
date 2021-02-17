@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
 
     //Idol
     private IdolController curIdol;
+    //private OrbController curOrb;
+    public GameObject orbPrefab;
 
     private void Start()
     {
@@ -257,6 +259,8 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator StartCountdown()
     {
+        OrbController orb = Instantiate(orbPrefab, transform.position, Quaternion.identity).GetComponent<OrbController>();
+
         float timeLeft = 2f;
 
         while (timeLeft > 0)
@@ -269,7 +273,7 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
-        curIdol.Activate();
+        curIdol.Activate(rb, orb);
 
         yield return null;
     }

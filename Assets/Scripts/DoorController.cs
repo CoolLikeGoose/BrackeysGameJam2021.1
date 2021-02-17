@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
-    public float delay = 0.01f;
-    public float speed = 0.01f;
+    //public float delay = 0.01f;
+    //public float speed = 0.01f;
 
-    private BoxCollider2D mainCollider;
-    private SpriteRenderer sr;
+    //private BoxCollider2D mainCollider;
+    //private SpriteRenderer sr;
     private Animator anim;
 
-    private bool isOpenning;
-    private bool isClosing;
+    //private bool isOpenning;
+    //private bool isClosing;
 
-    private Coroutine curCor;
-    private Coroutine buffCor;
+    //private Coroutine curCor;
+    //private Coroutine buffCor;
 
-    private float finalScale = 0.8f;
-    private float startScale = 0.01f;
+    //private float finalScale = 0.8f;
+    //private float startScale = 0.01f;
 
     private void Start()
     {
-        mainCollider = GetComponent<BoxCollider2D>();
-        sr = GetComponent<SpriteRenderer>();
+        //mainCollider = GetComponent<BoxCollider2D>();
+        //sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
     }
 
     public void Open()
     {
-        if (isOpenning)
-          return;
+        //if (isOpenning)
+          //return;
 
         //mainCollider.enabled = false;
         //sr.enabled = false;
@@ -42,8 +42,8 @@ public class DoorController : MonoBehaviour
 
     public void Close()
     {
-        if (isClosing)
-            return;
+        //if (isClosing)
+            //return;
 
         ////mainCollider.enabled = true;
         ////sr.enabled = true;
@@ -53,56 +53,56 @@ public class DoorController : MonoBehaviour
         //buffCor = StartCoroutine(OnClose());
     }
 
-    private IEnumerator OnOpen()
-    {
-        isOpenning = true;
+    //private IEnumerator OnOpen()
+    //{
+    //    isOpenning = true;
 
-        GetReadyToCor(finalScale);
+    //    GetReadyToCor(finalScale);
 
-        while (transform.localScale.x > startScale)
-        {
-            transform.Rotate(Vector3.forward * speed * 100);
+    //    while (transform.localScale.x > startScale)
+    //    {
+    //        transform.Rotate(Vector3.forward * speed * 100);
 
-            transform.localScale -= Vector3.one * speed;
+    //        transform.localScale -= Vector3.one * speed;
 
-            yield return new WaitForSeconds(delay);
-        }
+    //        yield return new WaitForSeconds(delay);
+    //    }
 
-        transform.localScale = Vector3.one * startScale;
+    //    transform.localScale = Vector3.one * startScale;
 
-        isOpenning = false;
-    }
+    //    isOpenning = false;
+    //}
 
-    private IEnumerator OnClose()
-    {
-        isClosing = true;
+    //private IEnumerator OnClose()
+    //{
+    //    isClosing = true;
 
-        GetReadyToCor(startScale);
+    //    GetReadyToCor(startScale);
 
-        while (transform.localScale.x < finalScale)
-        {
-            transform.Rotate(Vector3.forward * -speed * 100);
+    //    while (transform.localScale.x < finalScale)
+    //    {
+    //        transform.Rotate(Vector3.forward * -speed * 100);
 
-            transform.localScale += Vector3.one * speed;
+    //        transform.localScale += Vector3.one * speed;
 
-            yield return new WaitForSeconds(delay);
-        }
+    //        yield return new WaitForSeconds(delay);
+    //    }
 
-        transform.localScale = Vector3.one * finalScale;
+    //    transform.localScale = Vector3.one * finalScale;
 
-        isClosing = false;
-    }
+    //    isClosing = false;
+    //}
 
-    private void GetReadyToCor(float setScale)
-    {
-        if (curCor != null)
-            StopCoroutine(curCor);
-        curCor = buffCor;
+    //private void GetReadyToCor(float setScale)
+    //{
+    //    if (curCor != null)
+    //        StopCoroutine(curCor);
+    //    curCor = buffCor;
 
-        transform.localRotation = Quaternion.Euler(Vector3.zero);
-        transform.localScale = Vector3.one * setScale;
+    //    transform.localRotation = Quaternion.Euler(Vector3.zero);
+    //    transform.localScale = Vector3.one * setScale;
 
-        isOpenning = false;
-        isClosing = false;
-    }
+    //    isOpenning = false;
+    //    isClosing = false;
+    //}
 }
