@@ -31,15 +31,18 @@ public class IdolController : MonoBehaviour
             StopCoroutine(waitCor);
     }
 
-    public void Activate(Rigidbody2D activeRb, OrbController orb)
+    public void GiveOrbDest(OrbController orb)
     {
-        _activeRb = activeRb;
-
         Vector2 dest = transform.position;
         dest.y += .165f;
         orb.destination = dest;
 
         curOrb = orb;
+    }
+
+    public void Activate(Rigidbody2D activeRb)
+    {
+        _activeRb = activeRb;
 
         OpenAll();
         waitCor = StartCoroutine(WaitUntilDeactivate());

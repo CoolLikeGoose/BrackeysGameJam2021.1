@@ -6,16 +6,21 @@ public class OrbController : MonoBehaviour
 {
     [HideInInspector] public Vector2 destination;
 
-    //private IEnumerator Start()
-    //{
-    //    yield return new WaitUntil
-    //}
+    private float step = 0;
+
+    private IEnumerator Start()
+    {
+        yield return new WaitUntil(() => destination != Vector2.zero);
+
+        float dist = Vector2.Distance(transform.position, destination);
+        step = dist / 2;
+    }
 
     private void Update()
     {
         transform.Rotate(Vector3.forward * 900f * Time.deltaTime);
 
-        transform.position = Vector2.MoveTowards(transform.position, destination, 1f * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, destination, step * Time.deltaTime);
     }
 
     public void Destruct()

@@ -263,17 +263,22 @@ public class PlayerController : MonoBehaviour
 
         float timeLeft = 2f;
 
+        curIdol.GiveOrbDest(orb);
+
         while (timeLeft > 0)
         {
-            if (!Input.GetKey(KeyCode.F) || Input.GetAxis("Horizontal") != 0) 
+            if (!Input.GetKey(KeyCode.F) || Input.GetAxis("Horizontal") != 0)
+            {
+                orb.Destruct();
                 yield break;
+            }
 
             timeLeft -= 0.01f;
 
             yield return new WaitForSeconds(0.01f);
         }
 
-        curIdol.Activate(rb, orb);
+        curIdol.Activate(rb);
 
         yield return null;
     }
