@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doors: []
   colorReact: 6
+  trigger: {fileID: 6080656112195088394}
 --- !u!61 &7757373230515715478
 BoxCollider2D:
   m_ObjectHideFlags: 0

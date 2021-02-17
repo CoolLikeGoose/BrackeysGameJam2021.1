@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     private bool isNowMerging = false;
     private int curColorIndex = 0;
 
+
+    [SerializeField] private CircleCollider2D leftCollider;
+    [SerializeField] private CircleCollider2D rightCollider;
     //[SerializeField] private LayerMask anotherPlayer;
 
     //Skin
@@ -226,5 +229,10 @@ public class PlayerController : MonoBehaviour
 
         //Destroy(gameObject);
         gameObject.SetActive(false);
+    }
+
+    public CircleCollider2D[] GetColliders()
+    {
+        return new CircleCollider2D[] { rightCollider, leftCollider };
     }
 }

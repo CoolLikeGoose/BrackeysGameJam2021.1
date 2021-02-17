@@ -112,6 +112,11 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public PlayerController GetPlayerById(int id)
+    {
+        return player[id];
+    }
+
     //public static void GetColorsList(List<int> _avaibleColors)
     //{
     //    avaibleColors = _avaibleColors;

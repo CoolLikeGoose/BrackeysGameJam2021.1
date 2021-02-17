@@ -8,6 +8,8 @@ public class BtnController : MonoBehaviour
 
     [SerializeField] private ColorToMask colorReact;
 
+    [SerializeField] private BoxCollider2D trigger;
+
     private bool isOpen = false;
     private bool stillInCollider = false;
 
@@ -18,11 +20,18 @@ public class BtnController : MonoBehaviour
             if (isOpen)
                 CloseAll();
         };
+
+        PlayerController player = InputManager.Instance.GetPlayerById((int)colorReact - 6);
+
+        foreach (CircleCollider2D coll in player.GetColliders())
+        {
+            Physics2D.IgnoreCollision(trigger, coll, true);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer != (int)colorReact)
+        if (!isOpen && collision.gameObject.layer != (int)colorReact)
             return;
 
         isOpen = true;
@@ -32,7 +41,7 @@ public class BtnController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.layer != (int)colorReact)
+        if (isOpen && collision.gameObject.layer != (int)colorReact)
             return;
 
         isOpen = false;
