@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,8 +12,12 @@ public class IdolController : MonoBehaviour
     private OrbController curOrb;
     private PlayerController _curPlayer;
 
+    private Transform target;
+
     private void Start()
     {
+        target = transform.GetChild(0);
+
         GameManager.OnChangeColor += () =>
         {
             CancelAll();
@@ -34,9 +38,7 @@ public class IdolController : MonoBehaviour
 
     public void GiveOrbDest(OrbController orb)
     {
-        Vector2 dest = transform.position;
-        dest.y += .165f;
-        orb.destination = dest;
+        orb.destination = target.position;
 
         curOrb = orb;
     }
