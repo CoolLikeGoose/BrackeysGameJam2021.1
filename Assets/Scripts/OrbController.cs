@@ -13,7 +13,7 @@ public class OrbController : MonoBehaviour
         yield return new WaitUntil(() => destination != Vector2.zero);
 
         float dist = Vector2.Distance(transform.position, destination);
-        step = dist / 2;
+        step = dist / 3;
     }
 
     private void Update()

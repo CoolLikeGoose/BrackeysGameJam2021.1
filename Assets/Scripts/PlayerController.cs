@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
     //Idol
     private IdolController curIdol;
-    //private OrbController curOrb;
+    [HideInInspector] public bool isIdolActivated = false;
     public GameObject orbPrefab;
 
     private void Start()
@@ -259,6 +259,9 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator StartCountdown()
     {
+        if (isIdolActivated)
+            yield break;
+
         OrbController orb = Instantiate(orbPrefab, transform.position, Quaternion.identity).GetComponent<OrbController>();
 
         float timeLeft = 2f;
@@ -278,7 +281,9 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
-        curIdol.Activate(rb);
+        isIdolActivated = true;
+
+        curIdol.Activate(this);
 
         yield return null;
     }

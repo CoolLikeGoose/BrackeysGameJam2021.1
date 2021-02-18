@@ -10,6 +10,7 @@ public class IdolController : MonoBehaviour
     private Coroutine waitCor;
     private Rigidbody2D _activeRb;
     private OrbController curOrb;
+    private PlayerController _curPlayer;
 
     private void Start()
     {
@@ -40,9 +41,10 @@ public class IdolController : MonoBehaviour
         curOrb = orb;
     }
 
-    public void Activate(Rigidbody2D activeRb)
+    public void Activate(PlayerController curPlayer)
     {
-        _activeRb = activeRb;
+        _curPlayer = curPlayer;
+        _activeRb = _curPlayer.rb;
 
         OpenAll();
         waitCor = StartCoroutine(WaitUntilDeactivate());
@@ -67,6 +69,7 @@ public class IdolController : MonoBehaviour
     private void CloseAll()
     {
         curOrb.Destruct();
+        _curPlayer.isIdolActivated = false;
 
         isOpen = false;
         foreach (DoorController door in doors)
