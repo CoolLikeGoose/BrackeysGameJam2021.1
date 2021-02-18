@@ -9,12 +9,14 @@ public class GameManager : MonoBehaviour
     public static Action OnChangeColor;
     public static Action OnAllColorsCollected;
     public static Action OnLevelComplete;
-    //public static Action OnIdLoaded;
+    public static Action OnIdLoaded;
 
     private void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        PlayerPrefs.SetInt("Level", SceneTransition.GetCurSceneId());
     }
 
     private void OnDestroy()

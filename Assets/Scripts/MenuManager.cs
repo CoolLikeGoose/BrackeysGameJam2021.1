@@ -19,12 +19,13 @@ public class MenuManager : MonoBehaviour
     //Btns methods
     public void OnPlayBtn()
     {
-        SceneTransition.SwitchToScene("SceneToShow");
+        SceneTransition.SwitchToScene("level_1");
     }
 
+    //Continue
     public void OnSettingsBtn()
     {
-
+        SceneTransition.SwitchToScene($"level_{PlayerPrefs.GetInt("Level", 1)}");
     }
 
     public void OnExitBtn()

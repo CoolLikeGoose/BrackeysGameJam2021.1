@@ -17,6 +17,13 @@ public class SceneTransition : MonoBehaviour
         instance.anim.SetTrigger("transStart");
     }
 
+    public static int GetCurSceneId()
+    {
+        string[] sceneName = SceneManager.GetActiveScene().name.Split('_');
+
+        return int.Parse(sceneName[1]);
+    }
+
     //public static void SwitchToSceneById(int ind)
     //{
     //    curTransScene = null;

@@ -18,7 +18,7 @@ public class OrbController : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(Vector3.forward * 900f * Time.deltaTime);
+        transform.Rotate(Vector3.forward * 500f * Time.deltaTime);
 
         transform.position = Vector2.MoveTowards(transform.position, destination, step * Time.deltaTime);
     }

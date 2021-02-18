@@ -112,7 +112,33 @@ public class ExitController : MonoBehaviour
         if (canWin && collision.CompareTag("Player"))
         {
             //GameManager.OnLevelComplete?.Invoke();
-            SceneTransition.ReloadScene();
+            StartCoroutine(collision.gameObject.GetComponent<PlayerController>().MoveToCur(transform.position));
+
+            StartCoroutine(StartExitAnimtaion());
         }
+    }
+
+    private IEnumerator StartExitAnimtaion()
+    {
+        while (transform.localScale.x < 2)
+        {
+            transform.localScale += Vector3.one * 0.05f;
+
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        StartCoroutine(EndExitAnimtaion());
+    }
+
+    private IEnumerator EndExitAnimtaion()
+    {
+        while (transform.localScale.x > 0.1f)
+        {
+            transform.localScale -= Vector3.one * 0.05f;
+
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        SceneTransition.SwitchToScene($"level_{PlayerPrefs.GetInt("Level", 0) + 1}");
     }
 }
