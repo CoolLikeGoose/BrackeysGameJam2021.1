@@ -245,7 +245,7 @@ public class PlayerController : MonoBehaviour
 
     public void StartIdolActivity()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.7f, 1 << gameObject.layer);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.7f, 1 << gameObject.layer | 1);
 
         foreach (Collider2D coll in colliders)
         {

@@ -5,8 +5,9 @@ using UnityEngine;
 public class IdolController : MonoBehaviour
 {
     [SerializeField] private List<DoorController> doors;
+    [SerializeField] private IdolController linkedIdol;
 
-    private bool isOpen;
+    [HideInInspector] public bool isOpen;
     private Coroutine waitCor;
     private Rigidbody2D _activeRb;
     private OrbController curOrb;
@@ -54,7 +55,7 @@ public class IdolController : MonoBehaviour
 
     private IEnumerator WaitUntilDeactivate()
     {
-        yield return new WaitUntil(() => _activeRb.velocity.x != Vector2.zero.x);
+        yield return new WaitUntil(() => _activeRb.velocity.x != Vector2.zero.x); //&& Input.GetAxis("Horizontal") != 0);
 
         CloseAll();
     }
@@ -62,6 +63,10 @@ public class IdolController : MonoBehaviour
     private void OpenAll()
     {
         isOpen = true;
+
+        if (linkedIdol != null && linkedIdol.isOpen)
+            return;
+
         foreach (DoorController door in doors)
         {
             door.Open();
@@ -74,6 +79,10 @@ public class IdolController : MonoBehaviour
         _curPlayer.isIdolActivated = false;
 
         isOpen = false;
+
+        if (linkedIdol != null && linkedIdol.isOpen)
+            return;
+
         foreach (DoorController door in doors)
         {
             door.Close();

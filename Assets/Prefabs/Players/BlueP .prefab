@@ -366,8 +366,12 @@ MonoBehaviour:
   rb: {fileID: 0}
   childWithLight: {fileID: 5210317538666393259}
   sr: {fileID: 0}
+  leftCollider: {fileID: 0}
+  rightCollider: {fileID: 0}
   coreRend: {fileID: 5210317538465998301}
   halfRend: {fileID: 5210317539596628311}
+  isIdolActivated: 0
+  orbPrefab: {fileID: 9138063774236784733, guid: 274c989726a708941bc674016279eb38, type: 3}
 --- !u!58 &5210317539193400003
 CircleCollider2D:
   m_ObjectHideFlags: 0
