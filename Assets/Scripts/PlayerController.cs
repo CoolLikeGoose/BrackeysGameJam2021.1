@@ -287,4 +287,12 @@ public class PlayerController : MonoBehaviour
 
         yield return null;
     }
+
+    public void ImitDeath()
+    {
+        ParticleSystem.MainModule ps = Instantiate(InputManager.Instance.particles, transform.position, Quaternion.identity).main;
+        ps.startColor = Color.white;
+
+        gameObject.SetActive(false);
+    }
 }
