@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DestructorController : MonoBehaviour
 {
-    private int canPass = 0;
+    private int canPass = 3;
 
     private void Start()
     {
@@ -22,7 +22,9 @@ public class DestructorController : MonoBehaviour
         }
         else
         {
+            print("A");
             SceneTransition.ReloadScene();
+            canPass = 3;
         }
     }
 }

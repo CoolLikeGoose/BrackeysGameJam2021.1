@@ -22,6 +22,11 @@ public class MenuManager : MonoBehaviour
         SceneTransition.SwitchToScene("level_1");
     }
 
+    public void OnMenuBtn()
+    {
+        SceneTransition.SwitchToScene("MenuV2");
+    }
+
     //Continue
     public void OnSettingsBtn()
     {

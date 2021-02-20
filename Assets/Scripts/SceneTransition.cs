@@ -15,6 +15,8 @@ public class SceneTransition : MonoBehaviour
     {
         curTransScene = name;
         instance.anim.SetTrigger("transStart");
+
+        SoundManager.TransitionSound();
     }
 
     public static int GetCurSceneId()

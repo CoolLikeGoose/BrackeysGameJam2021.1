@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, 0);
             rb.AddForce(Vector2.up * factor, ForceMode2D.Impulse);
+            SoundManager.JumpSound();
         }
     }
 
@@ -143,6 +144,8 @@ public class PlayerController : MonoBehaviour
 
     public void MergeIntoAnother()
     {
+        SoundManager.MergeSound();
+
         rb.isKinematic = true;
         rb.velocity = Vector2.zero;
 

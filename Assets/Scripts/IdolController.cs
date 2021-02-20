@@ -13,10 +13,14 @@ public class IdolController : MonoBehaviour
     private OrbController curOrb;
     private PlayerController _curPlayer;
 
+    private AudioSource audioSource;
+
     private Transform target;
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         target = transform.GetChild(0);
 
         GameManager.OnChangeColor += () =>
@@ -46,6 +50,8 @@ public class IdolController : MonoBehaviour
 
     public void Activate(PlayerController curPlayer)
     {
+        audioSource.Play();
+
         _curPlayer = curPlayer;
         _activeRb = _curPlayer.rb;
 
@@ -75,6 +81,7 @@ public class IdolController : MonoBehaviour
 
     private void CloseAll()
     {
+        audioSource.Pause();
         curOrb.Destruct();
         _curPlayer.isIdolActivated = false;
 
