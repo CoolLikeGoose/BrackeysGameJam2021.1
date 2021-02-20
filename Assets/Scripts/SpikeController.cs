@@ -11,9 +11,12 @@ public class SpikeController : MonoBehaviour
         if (activated)
             return;
 
-        activated = true;
+        if (collision.CompareTag("Player"))
+        {
+            activated = true;
 
-        collision.GetComponent<PlayerController>().ImitDeath();
-        SceneTransition.ReloadScene();
+            collision.GetComponent<PlayerController>().ImitDeath();
+            SceneTransition.ReloadScene();
+        }
     }
 }
