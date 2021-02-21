@@ -2,16 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class MenuManager : MonoBehaviour
 {
+    [SerializeField] private GameObject playBtn;
+
     [Header("BackGroundGameplay")]
     [SerializeField] private float leftX;
     [SerializeField] private float rightX;
     [SerializeField] private float Ypos;
 
+
     private void Start()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(playBtn);
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }

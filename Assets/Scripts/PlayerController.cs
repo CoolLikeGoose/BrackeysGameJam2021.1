@@ -273,7 +273,7 @@ public class PlayerController : MonoBehaviour
 
         while (timeLeft > 0)
         {
-            if (!Input.GetKey(KeyCode.F) || Input.GetAxis("Horizontal") != 0)
+            if (!(Input.GetKey(KeyCode.F) || Input.GetKey(KeyCode.Joystick1Button2)) || Input.GetAxis("Horizontal") != 0)
             {
                 orb.Destruct();
                 yield break;

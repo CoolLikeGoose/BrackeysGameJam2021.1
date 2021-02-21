@@ -1881,7 +1881,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 21300000, guid: 07c7a49171fd09f49a6e04f42e2d7981, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 21300000, guid: 179e5341c3d2adf418413c3984e24df0, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -4315,7 +4315,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 21300000, guid: 07c7a49171fd09f49a6e04f42e2d7981, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 21300000, guid: 179e5341c3d2adf418413c3984e24df0, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -5261,6 +5261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fb4d8e7196fe9740b2e682c51bba28a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playBtn: {fileID: 543989205}
   leftX: -7.93
   rightX: 2.19
   Ypos: 10.9
@@ -7705,7 +7706,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 21300000, guid: 07c7a49171fd09f49a6e04f42e2d7981, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 21300000, guid: 179e5341c3d2adf418413c3984e24df0, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal

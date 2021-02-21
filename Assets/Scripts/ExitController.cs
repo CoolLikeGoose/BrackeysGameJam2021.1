@@ -132,12 +132,23 @@ public class ExitController : MonoBehaviour
 
     private IEnumerator EndExitAnimtaion()
     {
+        Coroutine suka = StartCoroutine(FUCK());
+
         while (transform.localScale.x > 0.1f)
         {
             transform.localScale -= Vector3.one * 0.05f;
 
             yield return new WaitForSeconds(0.01f);
         }
+
+        StopCoroutine(suka);
+
+        SceneTransition.SwitchToScene($"level_{PlayerPrefs.GetInt("Level", 0) + 1}");
+    }
+
+    private IEnumerator FUCK()
+    {
+        yield return new WaitForSeconds(2);
 
         SceneTransition.SwitchToScene($"level_{PlayerPrefs.GetInt("Level", 0) + 1}");
     }

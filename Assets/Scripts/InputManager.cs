@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class InputManager : MonoBehaviour
     public ParticleSystem particles;
 
     public GameObject PausePopup;
+    public GameObject firstBtn;
 
     [Header("Materials")]
     public List<Material> materials;
@@ -46,7 +48,7 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Joystick1Button1))
         {
             player[curPlayer].sr.material = materials[3];
 
@@ -58,31 +60,34 @@ public class InputManager : MonoBehaviour
             player[curPlayer].rb.AddForce(Vector2.up * 3, ForceMode2D.Impulse);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0))
         {
             player[curPlayer].Jump(jumpForce);
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
             SceneTransition.ReloadScene();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Joystick1Button3))
         {
             player[curPlayer].NextColor();
             GameManager.OnChangeColor?.Invoke();
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Joystick1Button2))
         {
             player[curPlayer].StartIdolActivity();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button6))
         {
             Time.timeScale = 0;
             PausePopup.SetActive(true);
+
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(firstBtn);
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

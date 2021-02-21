@@ -22,7 +22,6 @@ public class DestructorController : MonoBehaviour
         }
         else
         {
-            print("A");
             SceneTransition.ReloadScene();
             canPass = 3;
         }
